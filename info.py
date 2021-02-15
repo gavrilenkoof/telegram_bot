@@ -11,7 +11,7 @@ class _OpenWeatherMap():
                                'q': city,
                                'type': 'like',
                                'units': 'metric',
-                               'lang': 'ru',
+                               'lang': 'en',    #ru для русского
                                'APPID': _OpenWeatherMap.WEATHER_ID,
                            })
         data = res.json()

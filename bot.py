@@ -19,12 +19,28 @@ def check_currency(query):
 
 
 def check_weather(query):
+    """Функция, которая возвращает True, если нажали на кнопку 'weather'
+
+    Args:
+        query ([type]): данные о нажатии кнопки
+
+    Returns:
+        [boolean]: явлеяется ли кнопка 'weather', если да, то возвращает True,и наоборот
+    """
     if query.data == "weather":
         return True
     return False
 
 
 def check_exchange(query):
+    """Функция, которая возвращает True, если нажали на кнопку 'weather'
+
+    Args:
+        query ([type]): данные о нажатии кнопки
+
+    Returns:
+        [type]: явлеяется ли кнопка 'echange', если да, то возвращает True,и наоборот
+    """
     if query.data == "exchange":
         return True
     return False
@@ -32,6 +48,11 @@ def check_exchange(query):
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
+    """Начало работы с ботом
+
+    Args:
+        message ([type]): данные от пользователя 
+    """
     keyboard = telebot.types.InlineKeyboardMarkup()
     keyboard.add(telebot.types.InlineKeyboardButton('Weather', callback_data='weather'),
                 telebot.types.InlineKeyboardButton('Currency Exchange', callback_data='exchange'),
@@ -44,6 +65,11 @@ def start_command(message):
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
+    """Функция, которая при вызове /help представляет информацию о связе с разработчиком
+
+    Args:
+        message ([type]): данные от пользователя
+    """
     keyboard = telebot.types.InlineKeyboardMarkup()
     keyboard.add(telebot.types.InlineKeyboardButton(
         'Message the developer', url='https://telegram.me/jkban4e'
@@ -61,7 +87,7 @@ def weather_command(message):
 
 def get_weather(message):
     weather = information.get_weather_forecast(message.text)
-    bot.send_message(chat_id=message.chat.id, text=f"{weather}")
+    bot.send_message(chat_id=message.chat.id, text=f"Temperature in {weather['city']} is {weather['temp']} degrees celsius\nDescription of precipitation: {weather['conditions']}")
 
 
 @bot.callback_query_handler(func=check_weather)
@@ -117,7 +143,6 @@ def exchange_command_from_start(query):
     Функция, которая на отклик кнопки 'Currency exchange' отправляет пользователю меню
 
     """
-    #bot.send_message(chat_id=query.message.chat.id, text=f"{query.data}")
     bot.answer_callback_query(query.id)
     exchange_command(query.message)
 
