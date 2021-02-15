@@ -11,7 +11,7 @@ class _OpenWeatherMap():
                                'q': city,
                                'type': 'like',
                                'units': 'metric',
-                               'lang': 'ru',
+                               'lang': 'en',    #ru для русского
                                'APPID': _OpenWeatherMap.WEATHER_ID,
                            })
         data = res.json()
@@ -45,8 +45,11 @@ class CityInfo():
         self._weather_forecast = weather_forecast or _OpenWeatherMap()
         self._bank = bank or _NationalBankBelarus()
 
-    def weather_forecast(self, city):
+    def get_weather_forecast(self, city):
         return self._weather_forecast.get(city)
 
     def get_exchange(self, currency):
         return self._bank.get(currency)
+
+
+
